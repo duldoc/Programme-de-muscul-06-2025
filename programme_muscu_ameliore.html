@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programme de Musculation Complet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .program-overview {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .weekly-schedule {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            color: white;
+        }
+
+        .weekly-schedule h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .day-item {
+            background: rgba(255, 255, 255, 0.2);
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            transition: transform 0.2s;
+        }
+
+        .day-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .day-number {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #ffd700;
+        }
+
+        .day-type {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8em;
+        }
+
+        .muscle-groups {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .muscle-group {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 15px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .muscle-group:hover {
+            transform: scale(1.05);
+        }
+
+        .muscle-name {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .muscle-sets {
+            font-size: 1.3em;
+            margin-top: 5px;
+            color: #ffd700;
+        }
+
+        .workout-table {
+            margin-top: 40px;
+        }
+
+        .day-section {
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .day-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .exercise-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .exercise-table th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #2c3e50;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .exercise-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+            transition: background-color 0.2s;
+        }
+
+        .exercise-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .exercise-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .sets-reps {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            text-align: center;
+            display: inline-block;
+            min-width: 80px;
+        }
+
+        .rest-time {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .program-overview {
+                grid-template-columns: 1fr;
+            }
+            
+            .muscle-groups {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            
+            .exercise-table {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💪 Programme de Musculation</h1>
+        
+        <div class="program-overview">
+            <div class="weekly-schedule">
+                <h2>📅 Répartition Hebdomadaire</h2>
+                <div class="day-item">
+                    <div class="day-number">Jour 1</div>
+                    <div class="day-type">Upper 1 (Haut du corps - Focus force)</div>
+                </div>
+                <div class="day-item">
+                    <div class="day-number">Jour 2</div>
+                    <div class="day-type">Lower + Abs 1 (Bas du corps + Abdominaux)</div>
+                </div>
+                <div class="day-item">
+                    <div class="day-number">Jour 3</div>
+                    <div class="day-type">Upper 2 (Haut du corps - Volume mixte)</div>
+                </div>
+                <div class="day-item">
+                    <div class="day-number">Jour 4</div>
+                    <div class="day-type">Lower + Abs 2 (Bas du corps + Abdominaux)</div>
+                </div>
+                <div class="day-item">
+                    <div class="day-number">Jour 5</div>
+                    <div class="day-type">Upper 3 (Haut du corps - Volume/hypertrophie)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="workout-table">
+            <div class="day-section">
+                <div class="day-header">🏋️ Jour 1 - Upper 1 (Focus Force)</div>
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th>Exercice(s)</th>
+                            <th>Séries x Rép.</th>
+                            <th>Repos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="exercise-name">Développé décliné<br>Rowing Yates</td>
+                            <td><span class="sets-reps">3 x 3-6</span></td>
+                            <td class="rest-time">3-5 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Développé Machine / Convergeant<br>Rowing buste penché Machine / Convergeant</td>
+                            <td><span class="sets-reps">3 x 8-12</span></td>
+                            <td class="rest-time">2-3 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Élévations latérales</td>
+                            <td><span class="sets-reps">4 x 10-20</span></td>
+                            <td class="rest-time">2-3 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Oiseau</td>
+                            <td><span class="sets-reps">3 x 10-20</span></td>
+                            <td class="rest-time">2-3 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Élévations frontales</td>
+                            <td><span class="sets-reps">10-20 reps</span></td>
+                            <td class="rest-time">2-3 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Extension triceps poulie<br>Curl marteau</td>
+                            <td><span class="sets-reps">3 x 8-15</span></td>
+                            <td class="rest-time">2-3 min</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="day-section">
+                <div class="day-header">🦵 Jour 2 - Lower + Abs 1</div>
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th>Exercice(s)</th>
+                            <th>Séries x Rép.</th>
+                            <th>Repos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="exercise-name">Hack squat</td>
+                            <td><span class="sets-reps">3 x 8-12</span></td>
+                            <td class="rest-time">3-5 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Soulevé de terre jambes tendues</td>
+                            <td><span class="sets-reps">3 x 10-15</span></td>
+                            <td class="rest-time">3-5 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Hip thrust</td>
+                            <td><span class="sets-reps">3 x 10-20</span></td>
+                            <td class="rest-time">2-3 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Leg extension<br>Leg curl</td>
+                            <td><span class="sets-reps">3 x 10-20</span></td>
+                            <td class="rest-time">2-3 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Extension lombaire</td>
+                            <td><span class="sets-reps">4 x 10-20</span></td>
+                            <td class="rest-time">2 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Crunch tapis / poulie<br>Obliques haltère / poulie<br>Gainage planche</td>
+                            <td><span class="sets-reps">3 x 10-20</span></td>
+                            <td class="rest-time">2 min</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="day-section">
+                <div class="day-header">💪 Jour 3 - Upper 2 (Volume Mixte)</div>
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th>Exercice(s)</th>
+                            <th>Séries x Rép.</th>
+                            <th>Repos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="exercise-name">Développé couché (smith ou haltères)<br>Rowing horizontal serré Machine / poulie</td>
+                            <td><span class="sets-reps">3 x 8-12</span></td>
+                            <td class="rest-time">2-3 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Écarté machine / poulie<br>Oiseau machine / poulie</td>
+                            <td><span class="sets-reps">4 x 10-15</span></td>
+                            <td class="rest-time">2-3 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Développé militaire (smith ou haltères)<br>Tirage menton</td>
+                            <td><span class="sets-reps">3 x 8-12</span></td>
+                            <td class="rest-time">2-3 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Élévations latérales</td>
+                            <td><span class="sets-reps">3 x 10-20 + DS</span></td>
+                            <td class="rest-time">2-3 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Extension nuque</td>
+                            <td><span class="sets-reps">3 x 8-12 + DS</span></td>
+                            <td class="rest-time">2-3 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Curl incliné</td>
+                            <td><span class="sets-reps">3 x 8 + DS</span></td>
+                            <td class="rest-time">2-3 min</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="day-section">
+                <div class="day-header">🦵 Jour 4 - Lower + Abs 2</div>
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th>Exercice(s)</th>
+                            <th>Séries x Rép.</th>
+                            <th>Repos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="exercise-name">Soulevé de terre normal ou sumo</td>
+                            <td><span class="sets-reps">3 x 8-12</span></td>
+                            <td class="rest-time">3-5 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Presse à cuisses</td>
+                            <td><span class="sets-reps">3 x 10-15</span></td>
+                            <td class="rest-time">2-3 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Hip thrust</td>
+                            <td><span class="sets-reps">3 x 10-20</span></td>
+                            <td class="rest-time">2-3 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Leg extension<br>Leg curl</td>
+                            <td><span class="sets-reps">3 x 10-20</span></td>
+                            <td class="rest-time">2-3 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Extension lombaire</td>
+                            <td><span class="sets-reps">4 x 10-20</span></td>
+                            <td class="rest-time">2 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Relevés de jambes<br>Obliques haltères / poulie<br>Gainage planche</td>
+                            <td><span class="sets-reps">3 x 10-20</span></td>
+                            <td class="rest-time">2 min</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="day-section">
+                <div class="day-header">🔥 Jour 5 - Upper 3 (Volume/Hypertrophie)</div>
+                <table class="exercise-table">
+                    <thead>
+                        <tr>
+                            <th>Exercice(s)</th>
+                            <th>Séries x Rép.</th>
+                            <th>Repos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="exercise-name">Développé incliné (smith ou haltères)<br>Tirage poulie haute / Tractions</td>
+                            <td><span class="sets-reps">3 x 6-8</span></td>
+                            <td class="rest-time">3-5 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Développé incliné machine unilatéral<br>Tirage poulie prise serrée</td>
+                            <td><span class="sets-reps">3 x 10-20</span></td>
+                            <td class="rest-time">2-3 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Écarté poulie VAV</td>
+                            <td><span class="sets-reps">3 x 10-15</span></td>
+                            <td class="rest-time">2 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Élévations latérales</td>
+                            <td><span class="sets-reps">3 x 10-20 + DS</span></td>
+                            <td class="rest-time">2-3 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Oiseau</td>
+                            <td><span class="sets-reps">3 x 10-20 + DS</span></td>
+                            <td class="rest-time">2-3 min</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">Extension triceps<br>Curl marteau</td>
+                            <td><span class="sets-reps">3 x 8-12</span></td>
+                            <td class="rest-time">2-3 min</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h2>🎯 Répartition des Séries</h2>
+            <div class="muscle-groups">
+                <div class="muscle-group">
+                    <div class="muscle-name">Pectoraux</div>
+                    <div class="muscle-sets">22 séries</div>
+                </div>
+                <div class="muscle-group">
+                    <div class="muscle-name">Dos</div>
+                    <div class="muscle-sets">15 séries</div>
+                </div>
+                <div class="muscle-group">
+                    <div class="muscle-name">Épaules</div>
+                    <div class="muscle-sets">30 séries</div>
+                </div>
+                <div class="muscle-group">
+                    <div class="muscle-name">Quadriceps</div>
+                    <div class="muscle-sets">12 séries</div>
+                </div>
+                <div class="muscle-group">
+                    <div class="muscle-name">Ischio-jambiers</div>
+                    <div class="muscle-sets">12 séries</div>
+                </div>
+                <div class="muscle-group">
+                    <div class="muscle-name">Fessiers</div>
+                    <div class="muscle-sets">11 séries</div>
+                </div>
+                <div class="muscle-group">
+                    <div class="muscle-name">Triceps</div>
+                    <div class="muscle-sets">9 séries</div>
+                </div>
+                <div class="muscle-group">
+                    <div class="muscle-name">Biceps</div>
+                    <div class="muscle-sets">9 séries</div>
+                </div>
+                <div class="muscle-group">
+                    <div class="muscle-name">Abdominaux</div>
+                    <div class="muscle-sets">18 séries</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
